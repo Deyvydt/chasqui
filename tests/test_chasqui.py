@@ -95,3 +95,22 @@ def test_luma_filtra_ciudad():
 def test_instrucciones_incluyen_eventos_y_demo():
     texto = instrucciones([ev(por_que="Te conviene.")], modo_demo=True)
     assert "AWS Community Day Lima" in texto and "PRUEBA" in texto
+
+
+def test_proveedor_ia_elige_la_key_disponible(monkeypatch):
+    from chasqui import ia
+    for var in ("PROVEEDOR_IA", "GEMINI_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY"):
+        monkeypatch.delenv(var, raising=False)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "x")
+    assert ia.proveedor() == "anthropic"
+    monkeypatch.setenv("GEMINI_API_KEY", "y")
+    assert ia.proveedor() == "gemini"
+    monkeypatch.setenv("PROVEEDOR_IA", "openai")
+    assert ia.proveedor() == "openai"
+
+
+def test_link_calendario_en_whatsapp():
+    e = Evento(nombre="DevFest Lima", fuente="t", fecha_inicio="2026-12-05T18:00:00-05:00")
+    link = calendario.link_agregar(e)
+    assert "dates=20261205T230000Z%2F20261206T010000Z" in link
+    assert "Agregar a tu calendario" in whatsapp.texto_resumen(e)

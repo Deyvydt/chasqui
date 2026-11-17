@@ -41,9 +41,15 @@ python -m chasqui.agent download-files   # descarga los modelos locales (VAD)
 Copia el `.env` que te pasé a la raíz del proyecto (ya trae tu número).
 Si no lo tienes: `cp .env.example .env` y pon `MI_TELEFONO=+51...`.
 
-### 2. OpenAI (buscar e investigar eventos)
-- Crea una API key en <https://platform.openai.com/api-keys> (necesita saldo).
-- Ponla en `OPENAI_API_KEY`.
+### 2. Una key de IA (buscar e investigar eventos) — elige UNA
+| Proveedor | Variable | Dónde se saca |
+|---|---|---|
+| Gemini (Google) | `GEMINI_API_KEY` | <https://aistudio.google.com/apikey> — la búsqueda en Google necesita activar facturación, pero trae un cupo gratis mensual |
+| OpenAI | `OPENAI_API_KEY` | <https://platform.openai.com/api-keys> (con saldo) |
+| Claude (Anthropic) | `ANTHROPIC_API_KEY` | <https://console.anthropic.com> (con saldo) |
+
+Chasqui usa la que encuentre (o fuerza una con `PROVEEDOR_IA=gemini|openai|anthropic`).
+La voz del agente **no** usa esta key: va por LiveKit Inference.
 
 ### 3. LiveKit Cloud (la voz)
 - Puedes usar tu proyecto **DiloAI** o crear uno nuevo en <https://cloud.livekit.io>.
@@ -69,7 +75,10 @@ python scripts/configurar_telefonia.py
 > un mensaje de prueba ("press any key"): presiona una tecla y entra Chasqui.
 > Si Twilio no te deja usar SIP Trunking en trial, súbela a cuenta pagada (unos 20 USD de saldo).
 
-### 5. Google Calendar (cuenta de servicio, sin login cada vez)
+### 5. (Opcional) Google Calendar automático
+**Sin este paso la demo funciona igual:** en el WhatsApp te llega un link
+"Agregar a tu calendario" y lo guardas con un toque. Si quieres que Chasqui lo
+agende solo cuando le dices "sí" en la llamada:
 1. <https://console.cloud.google.com> → crea un proyecto → **APIs & Services → Library** → activa **Google Calendar API**.
 2. **IAM & Admin → Service Accounts → Create** → entra a la cuenta → **Keys → Add key → JSON**.
 3. Guarda el JSON como `credenciales/google-sa.json`.

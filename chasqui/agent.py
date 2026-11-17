@@ -108,6 +108,10 @@ class Chasqui(Agent):
         if numero_evento in self.agendados:
             return "Ese evento ya está agendado."
         ev = self._evento(numero_evento)
+        if not calendario.configurado():
+            self.agendados.add(numero_evento)
+            return ("Calendar automático no está configurado: dile a David que en el "
+                    "WhatsApp le llega un link para agregarlo a su calendario con un toque.")
         try:
             await asyncio.to_thread(calendario.agendar, ev)
         except Exception as e:  # noqa: BLE001

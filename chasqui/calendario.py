@@ -45,6 +45,34 @@ def cuerpo_evento(ev: Evento) -> dict:
     }
 
 
+def configurado() -> bool:
+    import os
+    from pathlib import Path
+
+    return Path(config.GOOGLE_SERVICE_ACCOUNT_FILE).exists() and bool(os.getenv("GOOGLE_CALENDAR_ID", "").strip())
+
+
+def link_agregar(ev: Evento) -> str | None:
+    """Link de 'Agregar a Google Calendar' (funciona sin ninguna configuración)."""
+    from urllib.parse import urlencode
+    from zoneinfo import ZoneInfo
+
+    ini, fin = ev.inicio_dt(), ev.fin_dt()
+    if ini is None:
+        return None
+    utc = ZoneInfo("UTC")
+    fmt = "%Y%m%dT%H%M%SZ"
+    params = {
+        "action": "TEMPLATE",
+        "text": ev.nombre,
+        "dates": f"{ini.astimezone(utc).strftime(fmt)}/{fin.astimezone(utc).strftime(fmt)}",
+        "details": "\n\n".join(x for x in [ev.por_que, ev.url] if x),
+        "location": ", ".join(x for x in [ev.lugar, ev.direccion] if x),
+        "ctz": config.ZONA_HORARIA,
+    }
+    return "https://calendar.google.com/calendar/render?" + urlencode(params)
+
+
 def agendar(ev: Evento) -> str:
     creado = (
         _servicio()

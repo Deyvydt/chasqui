@@ -39,9 +39,6 @@ UMBRAL_IMPORTANCIA = int(_opt("UMBRAL_IMPORTANCIA", "80"))
 MAX_EVENTOS_POR_LLAMADA = int(_opt("MAX_EVENTOS_POR_LLAMADA", "3"))
 MAX_CANDIDATOS = int(_opt("MAX_CANDIDATOS", "15"))
 
-# --- LLM para buscar e investigar (OpenAI Responses API + web_search) ---
-MODELO_INVESTIGADOR = _opt("MODELO_INVESTIGADOR", "gpt-5-mini")
-
 # --- LiveKit (voz) ---
 AGENT_NAME = _opt("AGENT_NAME", "chasqui")
 STT_VOZ = _opt("STT_VOZ", "deepgram/nova-3")

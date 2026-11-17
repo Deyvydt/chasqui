@@ -29,6 +29,11 @@ def texto_resumen(ev: Evento) -> str:
     ]
     if ev.url:
         lineas.append(f"🔗 {ev.url}")
+    from .calendario import link_agregar
+
+    link_cal = link_agregar(ev)
+    if link_cal:
+        lineas.append(f"🗓️ Agregar a tu calendario: {link_cal}")
     if ev.por_que:
         lineas += ["", f"💡 {ev.por_que}"]
     return "\n".join(lineas)
