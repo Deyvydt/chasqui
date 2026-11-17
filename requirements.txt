@@ -1,0 +1,9 @@
+livekit-agents[silero]~=1.8
+livekit-api~=1.2
+openai>=2.0
+twilio~=9.13
+google-api-python-client~=2.0
+google-auth~=2.0
+httpx>=0.27
+python-dotenv>=1.0
+pytest>=8.0
