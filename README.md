@@ -27,6 +27,12 @@ fecha, lugar y de qué trata en **otras fuentes** (web oficial, Meetup, Eventbri
 
 ---
 
+## ⚡ Inicio rápido en Windows (doble clic)
+1. **`instalar.bat`**: crea el entorno, instala todo y copia tus keys de LiveKit desde el CLI `lk`.
+2. Pega en `.env` las keys que te marque con ❌ (pasos 2 y 4 de abajo).
+3. **`configurar.bat`**: arma la telefonía Twilio + LiveKit y te manda un WhatsApp de prueba.
+4. **`demo.bat`**: levanta el agente y te llama. 📞
+
 ## ✋ Lo que SÍ o SÍ tienes que hacer tú (≈30 min, una sola vez)
 
 Son cuentas y permisos que solo tú puedes crear. Todo lo demás ya está automatizado.
